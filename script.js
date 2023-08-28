@@ -2,15 +2,18 @@ const canvas = document.getElementById("canvas1");
 const ctx = canvas.getContext("2d");
 canvas.width = 640;
 canvas.height = 360;
-window.alert("hi");
 
 //keyboard event listeners
 let keys = [];
 window.addEventListener("keydown", e => {
-    if(keys.includes(e.key)){
+    if(!keys.includes(e.key)){
         switch(e.key){
             case " ":
                 keys.push(" ");
+                break;
+            case "Shift":
+                keys.push("Shift");
+                break;
             default:
                 break;
         }
@@ -21,10 +24,6 @@ window.addEventListener("keyup", e => {
         keys.splice(e.key);
     }
 });
-
-//physics variables
-let gravity = 10;
-let collisionDIRECTIONS = [];
 
 class Object {
     constructor(ctx, x, y, width, height){
@@ -37,6 +36,16 @@ class Object {
         ctx.fillRect(this.x, this.y, this.width, this.height);
     }
 }
+
+class Player extends Object{
+    constructor(ctx, x, y, width, height){
+        super();
+    }
+    draw(ctx){
+        super.draw(ctx);
+    }
+}
+let player = new Player(ctx, canvas.width/2, canvas.height/2, 50, 50);
 
 let platforms = [];
 class Platform extends Object {
@@ -78,11 +87,12 @@ class Powerup extends Object {
 }
 
 function animate(){
+    ctx.fillRect(0,0,50,50);
     if(keys.includes(" ")){
 
     }
 
-    [...player,platforms,...obstacles,...powerups].forEach(object => {
+    [...player...platforms...obstacles...powerups].forEach(object => {
         object.draw();
     });
 
@@ -90,34 +100,40 @@ function animate(){
 }
 animate();
 
-function rectCollide(a, b, directionsToCollide = []){
-    /* if((
-            a.x + a.width > b.x || //left
-            a.x < b.x + b.width //right
-        ) && (
-            a.y + a.height > b.y || //top
-            b.y + b.height > a.y //bottom
-        )){
-            return true;
-        } else {
-            return false;
-        } */
+function rectCollide(a, b, directionsToCollide = ["top", "bottom", "left", "right"]){
+    let collision = false;
     for (const collisionDirection of directionsToCollide) {
-        let horizontalCollision = false;
-        let verticalCollision = false;
-        let collision = false;
+        let collisionsArray = [];
         switch(collisionDirection){
             case "top":
+                if((a.x+a.height>b.y)&&(a.x+a.width>b.x||a.x<b.x+b.width)){
+                    collisionsArray.push("top");
+                }
                 break;
             case "bottom":
+                if((b.y+b.height>a.y)&&(a.x+a.width>b.x||a.x<b.x+b.width)){
+                    collisionsArray.push("bottom");
+                }
                 break;
             case "left":
+                if((a.x+a.width>b.x)&&(a.y+a.height>b.y||b.y+b.height>a.y)){
+                    collisionsArray.push("left");
+                }
                 break;
             case "right":
+                if((a.x<b.x+b.width)&&(a.y+a.height>b.y||b.y+b.height>a.y)){
+                    collisionsArray.push("right");
+                }
                 break;
             default:
                 return false;
         }
     }
-    return collision;
+    /*
+    index 1 - top
+    index 2 - bottom
+    index 3 - left
+    index 4 - right
+    */
+    return collisionsArray;
 }
