@@ -1,0 +1,48 @@
+{
+  "player": {
+    "physics":{
+      "displayX": 320,
+      "displatY": 180,
+      "x": null,
+      "y": null,
+    }
+    "stats":{
+      "health": 100,
+     "energy": 100,
+      "xp": 0,
+    }
+  }
+    
+  "platform": {
+    "physics": {
+      "x": null,
+      "y": null,
+      "displayX": null,
+      "displayY": null,
+      "collisionWithPlayer": false,
+    }
+  }
+    
+  "enemy":{
+    
+    "ground":{
+      "physics":{
+        
+      }
+      "stat":{
+        
+      }
+    }
+    
+    "flight":{
+      "physics":{
+        
+      }
+      "stat":{
+        
+      }
+    }
+    
+  }
+    
+}
