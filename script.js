@@ -28,8 +28,6 @@ xhr.responseType = "text";
 //xhr onload event
 xhr.onload = event => {
   objects = JSON.parse(xhr.responseText);
-  let player = objects.player;
-console.log(player)
 } 
 xhr.send(); //send xhr request
 
