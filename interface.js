@@ -8,6 +8,5 @@ export class interface {
     window.addEventListener("keyup", e => {
       this.keys.splice(e.key);
     });
-    
   }
 }
