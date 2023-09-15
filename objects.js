@@ -11,10 +11,9 @@ export class player {
     this.maxJumps = 2;
     this.jumpsLeft = 2;
     this.onPlatform = true;
-    this.keys = [];
   }
   update(){
-    this.keys = this.game.interface.keys;
+    
   }
   draw(){
     this.ctx.fillRect(this.x, this.y, this.width, this.height);
@@ -29,15 +28,22 @@ export class platform {
     this.y = Math.random()/this.game.canvas.height;
     this.width = Math.random() * 175 + 60;
     this.height = Math.random() * 20 + 50;
-    this.speedModifier = Math.random()*2;
   }
   update(){
-    if(this.y > this.game.player.y + this.game.player.width){
+    if((
+        //horizontal
+        this.x > this.game.player.x + this.game.player.x ||
+        
+      ) &&
+      (
+        //vertical
+        this.y > this.game.player.x + this.game.player.height
+      )
+    ){
       this.game.player.onPlatform = true;
     }else{
       this.game.player.onPlatform = false;
     }
-    this.x -= this.speedModifier * this.game.scrollingSpeed;
   }
   draw(){
     this.ctx.fillRect(this.x, this.y, this.width, this.height);

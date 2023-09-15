@@ -1,8 +1,5 @@
-const canvas = document.getElementById("canvas1");
-const ctx = canvas.getContext("2d");
-canvas.width = 640;
-canvas.height = 360;
-
+import { Game } from "./main.js"
+let game = new Game();
 function animate(){
   requestAnimationFrame(animate);
 }
